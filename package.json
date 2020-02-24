@@ -1,5 +1,5 @@
 {
-  "name": "tateru-cli-cicd",
+  "name": "tateru-cli-ci-cd",
   "version": "1.0.0",
   "description": "CI/CD test for building projects with tateru-cli",
   "main": "index.js",
