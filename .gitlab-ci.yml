@@ -9,6 +9,7 @@ build:node10:
         - npm ci
     script:
         - npm run build
+        - node -v > dist/node-version.txt
     only:
         - master
     artifacts:
@@ -23,6 +24,7 @@ build:node11:
         - npm ci
     script:
         - npm run build
+        - node -v > dist/node-version.txt
     only:
         - master
     artifacts:
@@ -37,6 +39,7 @@ build:node12:
         - npm ci
     script:
         - npm run build
+        - node -v > dist/node-version.txt
     only:
         - master
     artifacts:
