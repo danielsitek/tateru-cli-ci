@@ -1,6 +1,7 @@
 
 stages:
     - build
+    - test
 
 build:node10:
     image: node:10
@@ -61,3 +62,49 @@ build:node-latest:
         name: "build-node-latest-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}"
         paths:
             - dist
+
+test:node10:
+    image: node:10
+    stage: test
+    script:
+        - sh compare.sh
+    only:
+        - master
+    needs:
+        - job: build:node10
+          artifacts: true
+
+test:node11:
+    image: node:11
+    stage: test
+    script:
+        - sh compare.sh
+    only:
+        - master
+    needs:
+        - job: build:node11
+          artifacts: true
+
+test:node12:
+    image: node:12
+    stage: test
+    script:
+        - sh compare.sh
+    only:
+        - master
+    needs:
+        - job: build:node12
+          artifacts: true
+
+test:node-latest:
+    image: node:latest
+    stage: test
+    script:
+        - sh compare.sh
+    only:
+        - master
+    needs:
+        - job: build:node-latest
+          artifacts: true
+
+
