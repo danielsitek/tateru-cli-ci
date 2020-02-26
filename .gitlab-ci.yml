@@ -68,6 +68,7 @@ test:node10:
     stage: test
     script:
         - sh compare.sh
+        - ls -la
     only:
         - master
     needs:
