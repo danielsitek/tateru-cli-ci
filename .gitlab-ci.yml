@@ -16,7 +16,7 @@ build:node10:
     artifacts:
         name: "build-node10-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}"
         paths:
-            - dist
+            - dist/
 
 build:node11:
     image: node:11
@@ -31,7 +31,7 @@ build:node11:
     artifacts:
         name: "build-node11-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}"
         paths:
-            - dist
+            - dist/
 
 build:node12:
     image: node:12
@@ -46,7 +46,7 @@ build:node12:
     artifacts:
         name: "build-node12-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}"
         paths:
-            - dist
+            - dist/
 
 build:node-latest:
     image: node:latest
@@ -61,10 +61,10 @@ build:node-latest:
     artifacts:
         name: "build-node-latest-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}"
         paths:
-            - dist
+            - dist/
 
 test:node10:
-    image: node:10
+    image: alpine:latest
     stage: test
     script:
         - sh compare.sh
@@ -74,7 +74,7 @@ test:node10:
         - build:node10
 
 test:node11:
-    image: node:11
+    image: alpine:latest
     stage: test
     script:
         - sh compare.sh
@@ -84,7 +84,7 @@ test:node11:
         - build:node11
 
 test:node12:
-    image: node:12
+    image: alpine:latest
     stage: test
     script:
         - sh compare.sh
@@ -94,7 +94,7 @@ test:node12:
         - build:node12
 
 test:node-latest:
-    image: node:latest
+    image: alpine:latest
     stage: test
     script:
         - sh compare.sh

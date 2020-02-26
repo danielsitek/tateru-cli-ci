@@ -8,21 +8,42 @@
 # ###
 
 testDiff() {
-    RETURN=0
+    RETURN=0;
 
-    printf "\n"
-    printf "Testing Diff\n"
-    echo "------------"
-    printf "\n"
+    printf "\n";
+    printf "Testing Diff\n";
+    echo "------------";
+    printf "\n";
 
-    for file in "$@"
+    for file in "$@";
     do
-        diff -q "sample/$file" "dist/$file" 1>/dev/null
-        if [[ $? == "0" ]]
+        SAMPLE_FILE="sample/${file}";
+        DIST_FILE="dist/${file}";
+        EXISTS=0
+
+        if [ ! -e $SAMPLE_FILE ]
         then
-            printf "> %-30s same\n" $file
+            printf "File sample/${file} does not exists\n";
+            EXISTS=1
+        fi
+
+        if [ ! -e $DIST_FILE ]
+        then
+            printf "File dist/${file} does not exists\n";
+            EXISTS=1
+        fi
+
+        if [ $EXISTS -eq 0 ]
+        then
+            diff -q $SAMPLE_FILE $DIST_FILE 1>/dev/null
+            if [ $? -eq 0 ]
+            then
+                printf "> %-30s same\n" ${file};
+            else
+                printf "> %-30s diff\n" ${file};
+                RETURN=1
+            fi
         else
-            printf "> %-30s diff\n" $file
             RETURN=1
         fi
     done
@@ -30,11 +51,11 @@ testDiff() {
     printf "\n"
     printf "Result >"
 
-    if [[ $RETURN == "0" ]]
+    if [ $RETURN -eq 0 ]
     then
-        printf "%-24s \e[1;32mFiles are same\e[0m\n" ""
+        printf "%-24s \e[1;32mFiles are same\e[0m\n";
     else
-        printf "%-24s \e[1;31mFiles are in diff\e[0m\n" ""
+        printf "%-24s \e[1;31mFiles are in diff\e[0m\n";
     fi
 
     return $RETURN
