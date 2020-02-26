@@ -1,5 +1,5 @@
 {
-  "name": "tateru-cli-ci-cd",
+  "name": "tateru-cli-ci",
   "version": "1.0.0",
   "description": "CI/CD test for building projects with tateru-cli",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "devDependencies": {},
   "scripts": {
     "build": "npx tateru-cli config.json",
+    "proto": "rm -rf proto && rm -rf dist && npm run build && cp -R dist proto && echo \"\nPrototype files generated!\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
