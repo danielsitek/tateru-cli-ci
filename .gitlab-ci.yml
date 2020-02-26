@@ -68,12 +68,10 @@ test:node10:
     stage: test
     script:
         - sh compare.sh
-        - ls -la
     only:
         - master
-    needs:
-        - job: build:node10
-          artifacts: true
+    dependencies:
+        - build:node10
 
 test:node11:
     image: node:11
@@ -82,9 +80,8 @@ test:node11:
         - sh compare.sh
     only:
         - master
-    needs:
-        - job: build:node11
-          artifacts: true
+    dependencies:
+        - build:node11
 
 test:node12:
     image: node:12
@@ -93,9 +90,8 @@ test:node12:
         - sh compare.sh
     only:
         - master
-    needs:
-        - job: build:node12
-          artifacts: true
+    dependencies:
+        - build:node12
 
 test:node-latest:
     image: node:latest
@@ -104,8 +100,7 @@ test:node-latest:
         - sh compare.sh
     only:
         - master
-    needs:
-        - job: build:node-latest
-          artifacts: true
+    dependencies:
+        - build:node-latest
 
 
