@@ -9,7 +9,9 @@
   "devDependencies": {},
   "scripts": {
     "build": "npx tateru-cli config.json",
-    "proto": "rm -rf proto && rm -rf dist && npm run build && cp -R dist proto && echo \"\nPrototype files generated!\"",
+    "diff": "sh compare.sh",
+    "sample": "rm -rf sample && rm -rf dist && npm run build && cp -R dist sample && echo \"\nSample files generated!\"",
+    "clean": "rm -rf sample && rm -rf dist && rm -rf node_modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
