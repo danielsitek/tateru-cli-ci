@@ -61,6 +61,6 @@ testDiff() {
     return $RETURN
 }
 
-testDiff 'index.html' 'about.html'
+testDiff 'index.html' 'about.html' 'robots.txt'
 
 exit $?;

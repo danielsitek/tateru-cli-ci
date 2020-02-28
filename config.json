@@ -22,7 +22,8 @@
                 "environment": "dev",
                 "root": "/"
             },
-            "title": "Tateru CLI Example"
+            "title": "Tateru CLI Example",
+            "domain": "https://example.com/"
         },
         "src": "src/twig",
         "ext": "dist"
@@ -51,6 +52,13 @@
                 },
                 "src": "views/about.html.twig",
                 "ext": "about.html"
+            },
+            "robots": {
+                "data": {
+                    "page": "robots_txt"
+                },
+                "src": "views/robots.txt.twig",
+                "ext": "robots.txt"
             }
         }
     }
