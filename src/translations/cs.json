@@ -1,8 +1,8 @@
 {
-    "homepage": {
-        "title": "Hello There!"
-    },
-    "about": {
-        "title": "Hello There from About page!"
-    }
+  "homepage": {
+    "title": "Hello There!"
+  },
+  "about": {
+    "title": "Hello There from About page!"
+  }
 }
