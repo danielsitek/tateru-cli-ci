@@ -1,72 +1,71 @@
-
 stages:
-    - build
-    - test
+  - build
+  - test
 
 # https://docs.gitlab.com/ee/ci/yaml/#anchors
 .job_build: &job_build
-    stage: build
-    before_script:
-        - npm ci
-    script:
-        - npm run build
-        - node -v > dist/node-version.txt
-    only:
-        - master
-    artifacts:
-        name: "build-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}"
-        paths:
-            - dist/
+  stage: build
+  before_script:
+    - npm ci
+  script:
+    - npm run build
+    - node -v > dist/node-version.txt
+  only:
+    - master
+  artifacts:
+    name: 'build-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
+    paths:
+      - dist/
 
 .job_test: &job_test
-    stage: test
-    script:
-        - sh compare.sh
-    only:
-        - master
+  stage: test
+  script:
+    - sh compare.sh
+  only:
+    - master
 
 # Stage Build
 build:node10:
-    image: node:10
-    variables:
-        ARTIFACTS_NODE_VERSION: node10
-    <<: *job_build
+  image: node:10
+  variables:
+    ARTIFACTS_NODE_VERSION: node10
+  <<: *job_build
 
 build:node11:
-    image: node:11
-    variables:
-        ARTIFACTS_NODE_VERSION: node11
-    <<: *job_build
+  image: node:11
+  variables:
+    ARTIFACTS_NODE_VERSION: node11
+  <<: *job_build
 
 build:node12:
-    image: node:12
-    variables:
-        ARTIFACTS_NODE_VERSION: node12
-    <<: *job_build
+  image: node:12
+  variables:
+    ARTIFACTS_NODE_VERSION: node12
+  <<: *job_build
 
 build:node-latest:
-    image: node:latest
-    variables:
-        ARTIFACTS_NODE_VERSION: node-latest
-    <<: *job_build
+  image: node:latest
+  variables:
+    ARTIFACTS_NODE_VERSION: node-latest
+  <<: *job_build
 
 # Stage Test
 test:node10:
-    <<: *job_test
-    dependencies:
-        - build:node10
+  <<: *job_test
+  dependencies:
+    - build:node10
 
 test:node11:
-    <<: *job_test
-    dependencies:
-        - build:node11
+  <<: *job_test
+  dependencies:
+    - build:node11
 
 test:node12:
-    <<: *job_test
-    dependencies:
-        - build:node12
+  <<: *job_test
+  dependencies:
+    - build:node12
 
 test:node-latest:
-    <<: *job_test
-    dependencies:
-        - build:node-latest
+  <<: *job_test
+  dependencies:
+    - build:node-latest
