@@ -10,6 +10,6 @@ tateru-cli-ci is repository dedicated only to CI and running tests in various en
 
 | Service | Config file | Status |
 | --- | --- | --- |
-| GitHub Actions | ci.yml | [![tateru-cli-ci status](https://github.com/danielsitek/tateru-cli-ci/workflows/ci-tests/badge.svg?branch=master)](https://github.com/danielsitek/tateru-cli-ci/blob/master/.github/workflows/ci.yml) |
 | GitLab Pipelines | .gitlab-ci.yml | [![pipeline status](https://gitlab.com/danielsitek/tateru-cli-ci/badges/master/pipeline.svg)](https://github.com/danielsitek/tateru-cli-ci/blob/master/.gitlab-ci.yml) |
+| GitHub Actions | ci.yml | [![tateru-cli-ci status](https://github.com/danielsitek/tateru-cli-ci/workflows/ci-tests/badge.svg?branch=master)](https://github.com/danielsitek/tateru-cli-ci/blob/master/.github/workflows/ci.yml) |
 
