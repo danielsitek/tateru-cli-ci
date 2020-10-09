@@ -39,7 +39,7 @@ stages:
     - sh compare.sh
   only:
     - master
-¨
+
 .job_test_prod: &job_test_prod
   stage: test:prod
   script:
@@ -138,4 +138,3 @@ test:prod:node-latest:
   <<: *job_test_prod
   dependencies:
     - build:prod:node-latest
-
