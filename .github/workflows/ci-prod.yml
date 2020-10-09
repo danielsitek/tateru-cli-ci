@@ -1,0 +1,36 @@
+name: CI Prod tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 */10 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10, 11, 12, 13]
+
+    steps:
+    - name: Getting configuration from GitHub
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Run build
+      run: |
+        npm ci
+        npm run build:prod --if-present
+        node -v > dist/node-version.txt
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist-node-${{ matrix.node-version }}
+        path: dist

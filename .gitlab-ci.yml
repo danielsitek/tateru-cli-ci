@@ -1,6 +1,8 @@
 stages:
   - build
   - test
+  - build:prod
+  - test:prod
 
 # https://docs.gitlab.com/ee/ci/yaml/#anchors
 .job_build: &job_build
@@ -13,7 +15,21 @@ stages:
   only:
     - master
   artifacts:
-    name: 'build-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
+    name: 'build-dev-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
+    paths:
+      - dist/
+
+.job_build_prod: &job_build_prod
+  stage: build:prod
+  before_script:
+    - npm ci
+  script:
+    - npm run build:prod
+    - node -v > dist/node-version.txt
+  only:
+    - master
+  artifacts:
+    name: 'build-prod-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
     paths:
       - dist/
 
@@ -21,6 +37,13 @@ stages:
   stage: test
   script:
     - sh compare.sh
+  only:
+    - master
+¨
+.job_test_prod: &job_test_prod
+  stage: test:prod
+  script:
+    - sh compare.sh prod
   only:
     - master
 
@@ -69,3 +92,50 @@ test:node-latest:
   <<: *job_test
   dependencies:
     - build:node-latest
+
+# Stage Build Prod
+build:prod:node10:
+  image: node:10
+  variables:
+    ARTIFACTS_NODE_VERSION: node10
+  <<: *job_build_prod
+
+build:prod:node11:
+  image: node:11
+  variables:
+    ARTIFACTS_NODE_VERSION: node11
+  <<: *job_build_prod
+
+build:prod:node12:
+  image: node:12
+  variables:
+    ARTIFACTS_NODE_VERSION: node12
+  <<: *job_build_prod
+
+build:prod:node-latest:
+  image: node:latest
+  variables:
+    ARTIFACTS_NODE_VERSION: node-latest
+  <<: *job_build_prod
+
+# Stage Test Prod
+test:prod:node10:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node10
+
+test:prod:node11:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node11
+
+test:prod:node12:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node12
+
+test:prod:node-latest:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node-latest
+
