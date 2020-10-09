@@ -13,8 +13,8 @@ testDiff() {
     RETURN=0;
 
     printf "%s\n" "";
-    printf "%s\n" "${ENV^^} Testing Diff";
-    printf "%s\n" "-----------------";
+    printf "%s\n" "[${ENV}] Testing Diff";
+    printf "%s\n" "-------------------";
     printf "%s\n" "";
 
     for file in "$@";
