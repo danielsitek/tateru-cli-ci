@@ -2,7 +2,7 @@
 
 {%- set pages = [
     '',
-    'cenik'
+    'about'
  ] -%}
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -11,15 +11,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
-{{ '\n\n' }}
-
+{{- '\n' }}
 {% for page in pages %}
-<url>
-    <loc>{{- domain ~ page -}}</loc>
-    <lastmod>{{- lastmod -}}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-</url>
-{{ '\n' }}
+    <url>
+        <loc>{{- domain ~ page -}}</loc>
+        <lastmod>{{- lastmod -}}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 {% endfor %}
 </urlset>
