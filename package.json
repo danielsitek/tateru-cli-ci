@@ -9,8 +9,11 @@
   "devDependencies": {},
   "scripts": {
     "build": "npx tateru-cli config.json",
+    "build:prod": "npx tateru-cli config.json --env prod",
     "diff": "sh compare.sh",
-    "sample": "rm -rf sample && rm -rf dist && npm run build && cp -R dist sample && echo \"\nSample files generated!\"",
+    "diff:prod": "sh compare.sh prod",
+    "sample": "rm -rf sample/dev && rm -rf dist && npm run build && cp -R dist sample/dev && printf \"\\n%s\\n\" \"Dev Sample files generated!\"",
+    "postsample": "rm -rf sample/prod && rm -rf dist && npm run build:prod && cp -R dist sample/prod && printf \"\\n%s\\n\" \"Prod Sample files generated!\"",
     "clean": "rm -rf sample && rm -rf dist && rm -rf node_modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
