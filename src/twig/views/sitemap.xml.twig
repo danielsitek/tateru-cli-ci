@@ -11,13 +11,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
-{{- '\n' }}
-{% for page in pages %}
-    <url>
-        <loc>{{- domain ~ page -}}</loc>
-        <lastmod>{{- lastmod -}}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-{% endfor %}
+{%- for page in pages -%}
+{{- '\n' -}}
+<url>
+    <loc>{{- domain ~ page -}}</loc>
+    <lastmod>{{- lastmod -}}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+</url>
+{%- endfor -%}
+{{- '\n' -}}
 </urlset>
