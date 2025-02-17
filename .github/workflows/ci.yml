@@ -7,12 +7,12 @@ on:
     - cron: "0 */10 * * *"
 
 jobs:
-  build:
+  latest:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14, 16, 18, 20, 22]
+        node-version: [14, 16, 18, 20, 22, 23]
 
     steps:
       - name: Getting configuration from GitHub
@@ -25,7 +25,7 @@ jobs:
 
       - name: Run build
         run: |
-          npm i -g tateru-cli
+          npm i -g tateru-cli@latest
           tateru-cli config.json --env dev
           node -v > dist/node-version.txt
 
