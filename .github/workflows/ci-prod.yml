@@ -25,8 +25,8 @@ jobs:
 
       - name: Run build
         run: |
-          npm ci
-          npm run build:prod --if-present
+          npm i -g tateru-cli
+          tateru-cli tateru.config.json --env prod
           node -v > dist/node-version.txt
 
       - name: Archive production artifacts
