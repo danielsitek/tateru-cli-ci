@@ -26,7 +26,7 @@ jobs:
       - name: Run build
         run: |
           npm i -g tateru-cli
-          tateru-cli config.json
+          tateru-cli config.json --env dev
           node -v > dist/node-version.txt
 
       - name: Archive production artifacts
