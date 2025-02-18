@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "CI/CD test for building projects with tateru-cli",
   "main": "index.js",
-  "dependencies": {
-    "tateru-cli": "^1.3.1"
-  },
-  "devDependencies": {},
   "scripts": {
     "build": "npx tateru-cli config.json",
     "build:prod": "npx tateru-cli config.json --env prod",
