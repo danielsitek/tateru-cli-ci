@@ -41,6 +41,7 @@ stages:
     - sh compare.sh dev
   only:
     - master
+    - merge_requests
 
 .job_test_prod: &job_test_prod
   stage: test:prod
@@ -48,6 +49,7 @@ stages:
     - sh compare.sh prod
   only:
     - master
+    - merge_requests
 
 # Stage Build
 build:node10:
