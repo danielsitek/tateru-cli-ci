@@ -29,6 +29,10 @@ jobs:
           tateru-cli config.json --env prod
           node -v > dist/node-version.txt
 
+      - name: Run tests
+        run: |
+          sh compare.sh prod
+
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
