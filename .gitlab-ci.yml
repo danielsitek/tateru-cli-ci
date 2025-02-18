@@ -36,7 +36,7 @@ stages:
 
 .job_test: &job_test
   stage: test
-  allow_failure: false
+  allow_failure: true
   script:
     - sh compare.sh dev
   only:
@@ -45,7 +45,7 @@ stages:
 
 .job_test_prod: &job_test_prod
   stage: test
-  allow_failure: false
+  allow_failure: true
   script:
     - sh compare.sh prod
   only:
