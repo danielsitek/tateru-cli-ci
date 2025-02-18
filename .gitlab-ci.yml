@@ -8,12 +8,13 @@ stages:
 .job_build: &job_build
   stage: build
   before_script:
-    - npm ci
+    - npm i -g tateru-cli@latest
   script:
-    - npm run build
+    - tateru-cli config.json --env dev
     - node -v > dist/node-version.txt
   only:
     - master
+    - merge_requests
   artifacts:
     name: 'build-dev-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
     paths:
@@ -22,12 +23,13 @@ stages:
 .job_build_prod: &job_build_prod
   stage: build:prod
   before_script:
-    - npm ci
+    - npm i -g tateru-cli@latest
   script:
-    - npm run build:prod
+    - tateru-cli config.json --env prod
     - node -v > dist/node-version.txt
   only:
     - master
+    - merge_requests
   artifacts:
     name: 'build-prod-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
     paths:
@@ -36,7 +38,7 @@ stages:
 .job_test: &job_test
   stage: test
   script:
-    - sh compare.sh
+    - sh compare.sh dev
   only:
     - master
 
