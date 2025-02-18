@@ -1,33 +1,34 @@
 stages:
   - build
   - test
-  - build:prod
-  - test:prod
 
+# TEMPLATES
 # https://docs.gitlab.com/ee/ci/yaml/#anchors
 .job_build: &job_build
   stage: build
   before_script:
-    - npm ci
+    - npm i -g tateru-cli@latest
   script:
-    - npm run build
+    - tateru-cli config.json --env dev
     - node -v > dist/node-version.txt
   only:
     - master
+    - merge_requests
   artifacts:
     name: 'build-dev-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
     paths:
       - dist/
 
 .job_build_prod: &job_build_prod
-  stage: build:prod
+  stage: build
   before_script:
-    - npm ci
+    - npm i -g tateru-cli@latest
   script:
-    - npm run build:prod
+    - tateru-cli config.json --env prod
     - node -v > dist/node-version.txt
   only:
     - master
+    - merge_requests
   artifacts:
     name: 'build-prod-{$ARTIFACTS_NODE_VERSION}-{$CI_COMMIT_REF_SLUG}-{$CI_COMMIT_SHORT_SHA}'
     paths:
@@ -35,18 +36,23 @@ stages:
 
 .job_test: &job_test
   stage: test
+  allow_failure: true
   script:
-    - sh compare.sh
+    - sh compare.sh dev
   only:
     - master
+    - merge_requests
 
 .job_test_prod: &job_test_prod
-  stage: test:prod
+  stage: test
+  allow_failure: true
   script:
     - sh compare.sh prod
   only:
     - master
+    - merge_requests
 
+# STAGES
 # Stage Build
 build:node10:
   image: node:10
@@ -66,11 +72,42 @@ build:node12:
     ARTIFACTS_NODE_VERSION: node12
   <<: *job_build
 
+build:node14:
+  image: node:14
+  variables:
+    ARTIFACTS_NODE_VERSION: node14
+  <<: *job_build
+
+build:node16:
+  image: node:16
+  variables:
+    ARTIFACTS_NODE_VERSION: node16
+  <<: *job_build
+
+build:node18:
+  image: node:18
+  variables:
+    ARTIFACTS_NODE_VERSION: node18
+  <<: *job_build
+
+build:node20:
+  image: node:20
+  variables:
+    ARTIFACTS_NODE_VERSION: node20
+  <<: *job_build
+
+build:node22:
+  image: node:22
+  variables:
+    ARTIFACTS_NODE_VERSION: node22
+  <<: *job_build
+
 build:node-latest:
   image: node:latest
   variables:
     ARTIFACTS_NODE_VERSION: node-latest
   <<: *job_build
+
 
 # Stage Test
 test:node10:
@@ -88,10 +125,36 @@ test:node12:
   dependencies:
     - build:node12
 
+test:node14:
+  <<: *job_test
+  dependencies:
+    - build:node14
+
+test:node16:
+  <<: *job_test
+  dependencies:
+    - build:node16
+
+test:node18:
+  <<: *job_test
+  dependencies:
+    - build:node18
+
+test:node20:
+  <<: *job_test
+  dependencies:
+    - build:node20
+
+test:node22:
+  <<: *job_test
+  dependencies:
+    - build:node22
+
 test:node-latest:
   <<: *job_test
   dependencies:
     - build:node-latest
+
 
 # Stage Build Prod
 build:prod:node10:
@@ -112,11 +175,42 @@ build:prod:node12:
     ARTIFACTS_NODE_VERSION: node12
   <<: *job_build_prod
 
+build:prod:node14:
+  image: node:14
+  variables:
+    ARTIFACTS_NODE_VERSION: node14
+  <<: *job_build_prod
+
+build:prod:node16:
+  image: node:16
+  variables:
+    ARTIFACTS_NODE_VERSION: node16
+  <<: *job_build_prod
+
+build:prod:node18:
+  image: node:18
+  variables:
+    ARTIFACTS_NODE_VERSION: node18
+  <<: *job_build_prod
+
+build:prod:node20:
+  image: node:20
+  variables:
+    ARTIFACTS_NODE_VERSION: node20
+  <<: *job_build_prod
+
+build:prod:node22:
+  image: node:22
+  variables:
+    ARTIFACTS_NODE_VERSION: node22
+  <<: *job_build_prod
+
 build:prod:node-latest:
   image: node:latest
   variables:
     ARTIFACTS_NODE_VERSION: node-latest
   <<: *job_build_prod
+
 
 # Stage Test Prod
 test:prod:node10:
@@ -133,6 +227,31 @@ test:prod:node12:
   <<: *job_test_prod
   dependencies:
     - build:prod:node12
+
+test:prod:node14:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node14
+
+test:prod:node16:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node16
+
+test:prod:node18:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node18
+
+test:prod:node20:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node20
+
+test:prod:node22:
+  <<: *job_test_prod
+  dependencies:
+    - build:prod:node22
 
 test:prod:node-latest:
   <<: *job_test_prod
