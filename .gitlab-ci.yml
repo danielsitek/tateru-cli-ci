@@ -1,8 +1,6 @@
 stages:
   - build
   - test
-  - build:prod
-  - test:prod
 
 # https://docs.gitlab.com/ee/ci/yaml/#anchors
 .job_build: &job_build
@@ -21,7 +19,7 @@ stages:
       - dist/
 
 .job_build_prod: &job_build_prod
-  stage: build:prod
+  stage: build
   before_script:
     - npm i -g tateru-cli@latest
   script:
@@ -44,7 +42,7 @@ stages:
     - merge_requests
 
 .job_test_prod: &job_test_prod
-  stage: test:prod
+  stage: test
   script:
     - sh compare.sh prod
   only:
