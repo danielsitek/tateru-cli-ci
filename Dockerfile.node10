@@ -1,0 +1,32 @@
+FROM node:10-alpine as prepare
+
+WORKDIR /usr/src/app
+
+RUN mkdir dist
+RUN node -v > dist/node10.txt
+
+CMD ["cat", "dist/node10.txt"]
+
+FROM node:10-alpine as dev
+
+WORKDIR /usr/src/app
+
+COPY --from=prepare /usr/src/app .
+
+COPY . .
+
+ENV RUN_ENV=development
+
+CMD ["sh", "run.sh"]
+
+FROM node:10-alpine as prod
+
+WORKDIR /usr/src/app
+
+COPY --from=prepare /usr/src/app .
+
+COPY . .
+
+ENV RUN_ENV=production
+
+CMD ["sh", "run.sh"]

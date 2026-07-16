@@ -14,3 +14,20 @@ tateru-cli-ci is repository dedicated only to CI and running tests in various en
 | GitHub Actions   | ci.yml         | [![tateru-cli-ci dev status](https://github.com/danielsitek/tateru-cli-ci/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/danielsitek/tateru-cli-ci/blob/master/.github/workflows/ci.yml)            |
 | GitHub Actions   | ci-prod.yml    | [![tateru-cli-ci prod status](https://github.com/danielsitek/tateru-cli-ci/actions/workflows/ci-prod.yml/badge.svg?branch=master)](https://github.com/danielsitek/tateru-cli-ci/blob/master/.github/workflows/ci-prod.yml) |
 
+## Docker runners
+
+```
+docker build -f Dockerfile.node10 --target dev -t tateru-cli-node10-dev:v1 .
+docker build -f Dockerfile.node10 --target prod -t tateru-cli-node10-prod:v1 .
+
+docker run tateru-cli-node10-dev:v1
+docker run tateru-cli-node10-prod:v1
+```
+
+```
+docker build -f Dockerfile.node12 --target dev -t tateru-cli-node12-dev:v1 .
+docker build -f Dockerfile.node12 --target prod -t tateru-cli-node12-prod:v1 .
+
+docker run tateru-cli-node12-dev:v1
+docker run tateru-cli-node12-prod:v1
+```
